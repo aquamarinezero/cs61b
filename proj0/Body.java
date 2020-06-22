@@ -33,15 +33,11 @@ public class Body{
 		return F;
 	}
 	public double calcForceExertedByX(Body b) {
-		double Fx = calcForceExertedBy(b) * (this.xxPos-b.xxPos) / calcDistance(b);
-		if(Fx < 0)
-			return -Fx;
+		double Fx = calcForceExertedBy(b) * (b.xxPos-this.xxPos) / calcDistance(b);
 		return Fx;
 	}
 	public double calcForceExertedByY(Body b) {
-		double Fy =  calcForceExertedBy(b) * (this.yyPos-b.yyPos) / calcDistance(b);
-		if(Fy < 0)
-			return -Fy;
+		double Fy =  calcForceExertedBy(b) * (b.yyPos-this.yyPos) / calcDistance(b);
 		return Fy;
 	}
 
@@ -72,6 +68,6 @@ public class Body{
 
 	public void draw(){
 		StdDraw.enableDoubleBuffering();
-		StdDraw.picture(this.xxPos,this.yyPos,this.imgFileName);
+		StdDraw.picture(this.xxPos,this.yyPos,"images/"+this.imgFileName);
 	}
 }

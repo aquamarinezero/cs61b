@@ -9,7 +9,7 @@ public class NBody {
         In in = new In(a);
         int count = in.readInt();
         double radius = in.readDouble();
-        Body[] result = new Body[5];
+        Body[] result = new Body[count];
         for(int i=0;i<count;i++)
             result[i] = new Body(in.readDouble(),in.readDouble(),in.readDouble(),in.readDouble(),in.readDouble(),in.readString());
         return result;

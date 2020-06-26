@@ -9,12 +9,12 @@ public class ArrayDeque<T> {
         nextFirst = 4;
         nextLast = 5;
     }
-
+    /*
     public ArrayDeque(ArrayDeque other){
         size = other.size;
         items = (T[]) new Object[other.items.length];
     }
-
+    */
     private void resize(double RFACTOR){
         T[] newItems = (T[])new Object[(int)RFACTOR * items.length];
         //需要扩充的情况肯定是，两个指针重合了，需要在两个指针中间进行扩充，分成两段
@@ -24,7 +24,7 @@ public class ArrayDeque<T> {
         nextFirst = newItems.length-(items.length-nextFirst);
     }
     public void addFirst(T item){
-        if(nextFirst == nextFirst)
+        if(nextFirst == nextLast)
             resize(2);
         items[nextFirst] = item;
         nextFirst = (nextFirst - 1)%items.length;
@@ -32,7 +32,7 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T item){
-        if(nextFirst == nextFirst)
+        if(nextFirst == nextLast)
             resize(2);
         items[nextLast] = item;
         nextLast = (nextLast + 1)%items.length;
@@ -76,6 +76,6 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index){
-        return items[index];
+        return items[(nextFirst+1+index)%items.length];
     }
 }

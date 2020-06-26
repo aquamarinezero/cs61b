@@ -93,11 +93,11 @@ public class LinkedListDeque<T> {
     }
 
     /*帮助递归*/
-    private T getPass(Node p, int index) {
+    private T getPass(Node<T> p, int index) {
         if (index == 0) {
-            return sentinel.next.item;
+            return p.next.item;
         }
-        return getPass(sentinel.next, index - 1);
+        return getPass(p.next, index - 1);
 
     }
     /*这个迭代的方法不太会写*/

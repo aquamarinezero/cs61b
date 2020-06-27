@@ -1,3 +1,5 @@
+import static org.junit.Assert.*;
+import org.junit.Test;
 public class HorribleSteve {
     public static void main(String [] args) throws Exception {
         int i = 0;
@@ -9,4 +11,13 @@ public class HorribleSteve {
         }
         System.out.println("i is " + i);
     }
+    /*
+    @ Test
+    public void testFlick() {
+        int i = 0;
+        for (int j = 0; i < 500; ++i, ++j) {
+            assertTrue(Flik.isSameNumber(i, j));
+        }
+    }
+    */
 }

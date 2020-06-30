@@ -1,4 +1,4 @@
-/*import org.junit.Test;
+import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestPalindrome {
@@ -15,4 +15,31 @@ public class TestPalindrome {
         }
         assertEquals("persiflage", actual);
     }
-}     Uncomment this class once you've created your Palindrome class. */
+
+    @Test
+    public void testWordPalindrome() {
+        //测试长度为0的字符串
+        assertTrue(palindrome.isPalindrome(""));
+        //测试长度为1的字符串
+        assertTrue(palindrome.isPalindrome("a"));
+        //测试回文
+        assertTrue(palindrome.isPalindrome("noon"));
+        assertTrue(palindrome.isPalindrome("racecar"));
+        //测试非回文
+        assertFalse(palindrome.isPalindrome("horse"));
+    }
+
+    @Test
+    public void testWordPalindrome2() {
+        OffByOne cc = new OffByOne();
+        //测试长度为0的字符串
+        assertTrue(palindrome.isPalindrome("", cc));
+        //测试长度为1的字符串
+        assertTrue(palindrome.isPalindrome("a", cc));
+        //测试回文
+        assertTrue(palindrome.isPalindrome("moon", cc));
+        assertTrue(palindrome.isPalindrome("racecar", cc));
+        //测试非回文
+        assertFalse(palindrome.isPalindrome("horse", cc));
+    }
+}

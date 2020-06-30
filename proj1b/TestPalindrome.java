@@ -23,7 +23,7 @@ public class TestPalindrome {
         //测试长度为1的字符串
         assertTrue(palindrome.isPalindrome("a"));
         //测试回文
-        assertTrue(palindrome.isPalindrome("noon"));
+        assertTrue(palindrome.isPalindrome("aba"));
         assertTrue(palindrome.isPalindrome("racecar"));
         //测试非回文
         assertFalse(palindrome.isPalindrome("horse"));
@@ -38,7 +38,7 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("a", cc));
         //测试回文
         assertTrue(palindrome.isPalindrome("moon", cc));
-        assertTrue(palindrome.isPalindrome("racecar", cc));
+        assertFalse(palindrome.isPalindrome("racecar", cc));
         //测试非回文
         assertFalse(palindrome.isPalindrome("horse", cc));
     }

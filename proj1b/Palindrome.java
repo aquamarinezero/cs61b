@@ -58,7 +58,7 @@ public class Palindrome {
         }
         Character first = deque.removeFirst();
         Character last = deque.removeLast();
-        if ((first == last) || (cc.equalChars(first, last))) {
+        if (cc.equalChars(first, last)) {
             return isPalindrromeHelper(deque);
         }
         return false;

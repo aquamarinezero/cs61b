@@ -37,7 +37,23 @@ public class TestPalindrome {
         //测试长度为1的字符串
         assertTrue(palindrome.isPalindrome("a", cc));
         //测试回文
-        assertTrue(palindrome.isPalindrome("moon", cc));
+        assertFalse(palindrome.isPalindrome("moon", cc));
+        assertTrue(palindrome.isPalindrome("detrude",cc));
+        assertFalse(palindrome.isPalindrome("racecar", cc));
+        //测试非回文
+        assertFalse(palindrome.isPalindrome("horse", cc));
+    }
+
+    @Test
+    public void testWordPalindrome3() {
+        OffByN cc = new OffByN(5);
+        //测试长度为0的字符串
+        assertTrue(palindrome.isPalindrome("", cc));
+        //测试长度为1的字符串
+        assertTrue(palindrome.isPalindrome("a", cc));
+        //测试回文
+        assertFalse(palindrome.isPalindrome("moon", cc));
+        assertTrue(palindrome.isPalindrome("binding",cc));
         assertFalse(palindrome.isPalindrome("racecar", cc));
         //测试非回文
         assertFalse(palindrome.isPalindrome("horse", cc));

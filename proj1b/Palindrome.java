@@ -31,17 +31,17 @@ public class Palindrome {
     //递归方法
     public boolean isPalindrome(String word) {
         Deque<Character> dequeString = wordToDeque(word);
-        return isPalindrromeHelper(dequeString);
+        return isPalindromeHelper(dequeString);
     }
 
-    private boolean isPalindrromeHelper(Deque<Character> deque) {
+    private boolean isPalindromeHelper(Deque<Character> deque) {
         if ((deque.size() == 0) || (deque.size() == 1)) {
             return true;
         }
         Character first = deque.removeFirst();
         Character last = deque.removeLast();
         if (first == last) {
-            return isPalindrromeHelper(deque);
+            return isPalindromeHelper(deque);
         }
         return false;
     }
@@ -49,17 +49,17 @@ public class Palindrome {
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
         Deque<Character> dequeString = wordToDeque(word);
-        return isPalindrromeHelper(dequeString, cc);
+        return isPalindromeHelper(dequeString, cc);
     }
 
-    private boolean isPalindrromeHelper(Deque<Character> deque, CharacterComparator cc) {
+    private boolean isPalindromeHelper(Deque<Character> deque, CharacterComparator cc) {
         if ((deque.size() == 0) || (deque.size() == 1)) {
             return true;
         }
         Character first = deque.removeFirst();
         Character last = deque.removeLast();
         if (cc.equalChars(first, last)) {
-            return isPalindrromeHelper(deque);
+            return isPalindromeHelper(deque,cc);
         }
         return false;
     }

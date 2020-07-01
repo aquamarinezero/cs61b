@@ -59,7 +59,7 @@ public class Palindrome {
         Character first = deque.removeFirst();
         Character last = deque.removeLast();
         if (cc.equalChars(first, last)) {
-            return isPalindromeHelper(deque,cc);
+            return isPalindromeHelper(deque, cc);
         }
         return false;
     }

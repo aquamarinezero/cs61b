@@ -1,5 +1,5 @@
 /** A client that uses the synthesizer package to replicate a plucked guitar string sound */
-import es.datastructur.synthesizer.GuitarString;
+import synthesizer.GuitarString;
 import java.util.Map;
 import java.util.HashMap;
 public class GuitarHero {

@@ -3,19 +3,15 @@ package creatures;
 import edu.princeton.cs.algs4.StdRandom;
 import huglife.*;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
 
 import static huglife.Action.ActionType.*;
+import static huglife.Action.ActionType.STAY;
 
-/**
- * An implementation of a motile pacifist photosynthesizer.
- *
- * @author Josh Hug
- */
-public class Plip extends Creature {
+public class Clorus extends Creature{
 
     /**
      * red color.
@@ -33,35 +29,25 @@ public class Plip extends Creature {
     /**
      * creates plip with energy equal to E.
      */
-    public Plip(double e) {
-        super("plip");
+    public Clorus(double e) {
+        super("clorus");
         r = 0;
         g = 0;
         b = 0;
         energy = e;
-        energyHelper();
         color();
     }
 
     /**
      * creates a plip with energy equal to 1.
      */
-    public Plip() {
+    public Clorus() {
         this(1);
     }
 
-    /**
-     * Should return a color with red = 99, blue = 76, and green that varies
-     * linearly based on the energy of the Plip. If the plip has zero energy,
-     * it should have a green value of 63. If it has max energy, it should
-     * have a green value of 255. The green value should vary with energy
-     * linearly in between these two extremes. It's not absolutely vital
-     * that you get this exactly correct.
-     */
     @Override
     public Color color() {
-        g = (int)(96 * energy + 63);
-        return color(99, g, 76);
+        return color(34,0,231);
     }
 
     /**
@@ -69,7 +55,7 @@ public class Plip extends Creature {
      */
     @Override
     public void attack(Creature c) {
-        // do nothing.
+        this.energy = this.energy + c.energy();
     }
 
     /**
@@ -79,8 +65,7 @@ public class Plip extends Creature {
      */
     @Override
     public void move() {
-        this.energy = this.energy - 0.15;
-        energyHelper();
+        this.energy = this.energy - 0.03;
     }
 
 
@@ -89,8 +74,7 @@ public class Plip extends Creature {
      */
     @Override
     public void stay() {
-        this.energy = this.energy + 0.2;
-        energyHelper();
+        this.energy = this.energy - 0.01;
     }
 
     /**
@@ -99,11 +83,10 @@ public class Plip extends Creature {
      * Plip.
      */
     @Override
-    public Plip replicate() {
-        Plip p = new Plip(0.5*this.energy);
+    public Clorus replicate() {
+        Clorus c = new Clorus(0.5*this.energy);
         this.energy = 0.5 * this.energy;
-        this.color();
-        return p;
+        return c;
     }
 
     /**
@@ -124,8 +107,9 @@ public class Plip extends Creature {
         // Rule 1
         // 使用该链表记录可用的邻居方向
         Deque<Direction> emptyNeighbors = new ArrayDeque<>();
+        Deque<Direction> plipNeighhbors = new ArrayDeque<>();
         boolean anyFree = false;
-        boolean anyClorus = false;
+        boolean anyPlip = false;
         // TODO
         // (Google: Enhanced for-loop over keys of NEIGHBORS?)
         // for () {...}
@@ -134,8 +118,9 @@ public class Plip extends Creature {
                 emptyNeighbors.add(entry.getKey());
                 anyFree = true;
             }
-            if(entry.getValue().getClass() == Clorus.class) {
-                anyClorus = true;
+            if(entry.getValue().name().equals("plip")) {
+                plipNeighhbors.add(entry.getKey());
+                anyPlip = true;
             }
         }
         if (!anyFree) { // 没有空间就stay
@@ -143,6 +128,15 @@ public class Plip extends Creature {
         }
 
         // Rule 2
+        if (anyPlip) {
+            double randomNumber = StdRandom.uniform();
+            int chooseInt = (int)randomNumber * plipNeighhbors.size();
+            for (int i = 0; i < chooseInt; i++)
+                plipNeighhbors.removeFirst();
+            return new Action(ATTACK, plipNeighhbors.removeFirst());
+        }
+
+        //Rule 3
         // HINT: randomEntry(emptyNeighbors)
         if (this.energy >= 1.0) {
             double randomNumber = StdRandom.uniform();
@@ -152,26 +146,10 @@ public class Plip extends Creature {
             return new Action(REPLICATE, emptyNeighbors.removeFirst());
         }
 
-        // Rule 3
-        if (anyClorus){
-            double randomNumber = StdRandom.uniform();
-            if (randomNumber > 0.5) {
-                int chooseInt = (int)StdRandom.uniform() * emptyNeighbors.size();
-                for (int i = 0; i < chooseInt; i++)
-                    emptyNeighbors.removeFirst();
-                return new Action(MOVE,emptyNeighbors.removeFirst());
-            }
-        }
         // Rule 4
-        return new Action(STAY);
-    }
-
-    private void energyHelper() {
-        if (this.energy < 0) {
-            this.energy = 0;
-        }
-        if (this.energy > 2) {
-            this.energy = 2;
-        }
+        int chooseInt = (int)StdRandom.uniform() * emptyNeighbors.size();
+        for (int i = 0; i < chooseInt; i++)
+            emptyNeighbors.removeFirst();
+        return new Action(MOVE,emptyNeighbors.removeFirst());
     }
 }

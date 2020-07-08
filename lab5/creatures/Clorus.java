@@ -118,13 +118,10 @@ public class Clorus extends Creature{
                 emptyNeighbors.add(entry.getKey());
                 anyFree = true;
             }
-            if(entry.getValue().name().equals("plip")) {
+            if(entry.getValue().getClass()== Plip.class) {
                 plipNeighhbors.add(entry.getKey());
                 anyPlip = true;
             }
-        }
-        if (!anyFree) { // 没有空间就stay
-            return new Action(STAY);
         }
 
         // Rule 2
@@ -134,6 +131,10 @@ public class Clorus extends Creature{
             for (int i = 0; i < chooseInt; i++)
                 plipNeighhbors.removeFirst();
             return new Action(ATTACK, plipNeighhbors.removeFirst());
+        }
+
+        if (!anyFree) { // 没有空间就stay
+            return new Action(STAY);
         }
 
         //Rule 3

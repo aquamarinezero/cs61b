@@ -8,10 +8,8 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next enqueue. */
     private int last;
     /* Variable for the fillCount. */
-    private int fillCount;
     /* Array for storing the buffer data. */
     private T[] rb;
-    private int capacityArray;
 
     /**
      * Create a new ArrayRingBuffer with the given capacity.
@@ -21,7 +19,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         last = 0;
         fillCount = 0;
         rb = (T[]) new Object[capacity];
-        capacityArray = capacity;
+        this.capacity = capacity;
     }
 
     /**
@@ -33,7 +31,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
             throw new RuntimeException("Ring buffer overflow");
         }
         rb[last] = x;
-        last = (last + 1 + capacityArray) % capacityArray;
+        last = (last + 1 + capacity) % capacity;
         fillCount = fillCount + 1;
     }
 
@@ -46,7 +44,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
             throw new RuntimeException("Ring buffer underflow");
         }
         T item = rb[first];
-        first = (first + 1 + capacityArray) % capacityArray;
+        first = (first + 1 + capacity) % capacity;
         fillCount = fillCount - 1;
         return item;
     }
@@ -65,7 +63,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
     @Override
     public int capacity() {
-        return capacityArray;
+        return capacity;
     }
 
     @Override
@@ -88,7 +86,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         @Override
         public T next() {
             int re = curr;
-            curr = (curr + 1 + capacityArray) % capacityArray;
+            curr = (curr + 1 + capacity) % capacity;
             return rb[re];
         }
     }

@@ -1,11 +1,8 @@
 package es.datastructur.synthesizer;
 import java.util.Iterator;
 
-//TODO: Make sure to that this class and all of its methods are public
-//TODO: Make sure to add the override tag for all overridden methods
-//TODO: Make sure to make this class implement BoundedQueue<T>
 
-public class ArrayRingBuffer<T>  {
+public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;
     /* Index for the next enqueue. */
@@ -14,13 +11,17 @@ public class ArrayRingBuffer<T>  {
     private int fillCount;
     /* Array for storing the buffer data. */
     private T[] rb;
+    private int capacityArray;
 
     /**
      * Create a new ArrayRingBuffer with the given capacity.
      */
     public ArrayRingBuffer(int capacity) {
-        // TODO: Create new array with capacity elements.
-        //       first, last, and fillCount should all be set to 0.
+        first = 0;
+        last = 0;
+        fillCount = 0;
+        rb = (T[]) new Object[capacity];
+        capacityArray = capacity;
     }
 
     /**
@@ -28,9 +29,12 @@ public class ArrayRingBuffer<T>  {
      * throw new RuntimeException("Ring buffer overflow").
      */
     public void enqueue(T x) {
-        // TODO: Enqueue the item. Don't forget to increase fillCount and update
-        //       last.
-        return;
+        if (isFull()) {
+            throw new RuntimeException("Ring buffer overflow");
+        }
+        rb[last] = x;
+        last = (last + 1 + capacityArray) % capacityArray;
+        fillCount = fillCount + 1;
     }
 
     /**
@@ -38,9 +42,13 @@ public class ArrayRingBuffer<T>  {
      * throw new RuntimeException("Ring buffer underflow").
      */
     public T dequeue() {
-        // TODO: Dequeue the first item. Don't forget to decrease fillCount and
-        //       update first.
-        return null;
+        if (isEmpty()) {
+            throw new RuntimeException("Ring buffer underflow");
+        }
+        T item = rb[first];
+        first = (first + 1 + capacityArray) % capacityArray;
+        fillCount = fillCount - 1;
+        return item;
     }
 
     /**
@@ -48,12 +56,59 @@ public class ArrayRingBuffer<T>  {
      * throw new RuntimeException("Ring buffer underflow").
      */
     public T peek() {
-        // TODO: Return the first item. None of your instance variables should
-        //       change.
-        return null;
+        if (isEmpty()) {
+            throw new RuntimeException("Ring buffer underflow");
+        }
+        T item = rb[first];
+        return item;
     }
 
-    // TODO: When you get to part 4, implement the needed code to support
-    //       iteration and equals.
+    @Override
+    public int capacity() {
+        return capacityArray;
+    }
+
+    @Override
+    public int fillCount() {
+        return fillCount;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayIterator();
+    }
+
+    private class ArrayIterator implements Iterator<T> {
+
+        private int curr = first;
+        @Override
+        public boolean hasNext() {
+            return curr != last;
+        }
+        @Override
+        public T next() {
+            int re = curr;
+            curr = (curr + 1 + capacityArray) % capacityArray;
+            return rb[re];
+        }
+    }
+
+    public boolean equals(Object o) {
+        ArrayRingBuffer<T> p = (ArrayRingBuffer<T>) o;
+        if (this.capacity() != p.capacity()) {
+            return false;
+        }
+        if (this.isEmpty()) {
+            return true;
+        }
+        int curr = first;
+        for (T sub: p) {
+            if (p != rb[curr]) {
+                return false;
+            }
+            curr = (first + 1 + capacity()) % capacity();
+        }
+        return true;
+    }
 }
-    // TODO: Remove all comments that say TODO when you're done.
+

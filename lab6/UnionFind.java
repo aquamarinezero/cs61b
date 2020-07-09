@@ -20,7 +20,7 @@ public class UnionFind {
 
     /* Throws an exception if v1 is not a valid index. */
     private void validate(int vertex) {
-        if ((vertex < 0) || (vertex >= length)) {
+        if ((vertex < -1) || (vertex >= length)) {
             throw new IllegalArgumentException("out of index");
         }
     }
@@ -28,7 +28,7 @@ public class UnionFind {
     /* Returns the size of the set v1 belongs to. */
     public int sizeOf(int v1) {
         validate(v1);
-        return size[v1];
+        return size[find(v1)];
     }
 
     /* Returns the parent of v1. If v1 is the root of a tree, returns the
@@ -42,7 +42,7 @@ public class UnionFind {
     public boolean connected(int v1, int v2) {
         validate(v1);
         validate(v2);
-        return parent(v1) == parent(v2);
+        return find(v1) == find(v2);
     }
 
     /* Connects two elements v1 and v2 together. v1 and v2 can be any valid 
@@ -53,12 +53,15 @@ public class UnionFind {
     public void union(int v1, int v2) {
         validate(v1);
         validate(v2);
-        if ((sizeOf(v1) == sizeOf(v2)) || (sizeOf(v1) < sizeOf(v2))) {
-            parent[parent(v1)] = v2;
-            size[v2] = size[v2] + size[v1];
+        if (connected(v1,v2)) {
+            return;
+        }
+        if ((sizeOf(v1) == sizeOf(v2)) || sizeOf(v1) < sizeOf(v2)) {
+            parent[find(v1)] = find(v2);
+            size[find(v2)] = sizeOf(v1) + sizeOf(v2);
         } else {
-            parent[parent(v2)] = v1;
-            size[v1] = size[v2] + size[v1];
+            parent[find(v2)] = find(v1);
+            size[find(v1)] = sizeOf(v1) + sizeOf(v2);
         }
     }
 
@@ -66,8 +69,8 @@ public class UnionFind {
        allowing for fast search-time. */
     public int find(int vertex) {
         validate(vertex);
-        if (parent(vertex) < 0) {
-            return parent(vertex);
+        if (parent(vertex) == -1) {
+            return vertex;
         }
         return find(parent(vertex));
     }

@@ -1,12 +1,12 @@
 package hw2;
 
 public class PercolationStats {
-    PercolationFactory pf;
-    double [] result;
-    double mean = 0.0;
-    double std = 0.0;
-    double confidenceLow = 0.0;
-    double confidenceHigh = 0.0;
+    private PercolationFactory pf;
+    private double [] result;
+    private double mean = 0.0;
+    private double std = 0.0;
+    private double confidenceLow = 0.0;
+    private double confidenceHigh = 0.0;
     public PercolationStats(int N, int T, PercolationFactory pf) {
         validate(N);
         validate(T);
@@ -41,7 +41,7 @@ public class PercolationStats {
     }
 
     private void validate(int index) {
-        if (index < 0) {
+        if (index <= 0) {
             throw new java.lang.IllegalArgumentException("illegal argument");
         }
     }

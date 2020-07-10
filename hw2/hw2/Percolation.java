@@ -3,10 +3,10 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    int[] grid;
-    WeightedQuickUnionUF wf;
-    int N;
-    int openCount;
+    private int[] grid;
+    private WeightedQuickUnionUF wf;
+    private int N;
+    private int openCount;
     public Percolation(int N) {
         if (N <= 0) {
             throw new java.lang.IllegalArgumentException("illegal argument");
